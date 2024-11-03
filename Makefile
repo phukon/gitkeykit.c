@@ -1,8 +1,14 @@
 CC = gcc
-CFLAGS = -Wall -Wextra
-SRCS = src/main.c src/system_check.c src/key_management.c src/git_config.c
+CFLAGS = -Wall -Wextra -I./src
+SRCS = src/main.c src/gpg_handler.c src/git_config.c src/logger.c
 OBJS = $(SRCS:.c=.o)
 TARGET = gitkeykit
+
+ifeq ($(OS),Windows_NT)
+    TARGET := $(TARGET).exe
+endif
+
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET)

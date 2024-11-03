@@ -1,28 +1,38 @@
-#include "gitkeykit.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "git_config.h"
+#include "logger.h"
 
-int configure_git_gpg(const char* key_id) {
-    char command[512];
-
-    // Configure Git to use GPG signing
-    system("git config --global commit.gpgsign true");
+bool configure_git(const GPGKeyInfo *key_info) {
+    char cmd[1024];
     
-    // Set the signing key
-    snprintf(command, sizeof(command), "git config --global user.signingkey %s", key_id);
-    system(command);
+    // Configure git user name
+    snprintf(cmd, sizeof(cmd), "git config --global user.name \"%s\"", key_info->name);
+    if (system(cmd) != 0) {
+        log_error("Failed to configure git user name");
+        return false;
+    }
 
-    // Configure GPG program path
-    #ifdef _WIN32
-        system("git config --global gpg.program \"C:/Program Files (x86)/GnuPG/bin/gpg.exe\"");
-    #else
-        system("git config --global gpg.program gpg");
-    #endif
+    // Configure git email
+    snprintf(cmd, sizeof(cmd), "git config --global user.email \"%s\"", key_info->email);
+    if (system(cmd) != 0) {
+        log_error("Failed to configure git email");
+        return false;
+    }
 
-    return SUCCESS;
-}
+    // Configure signing key
+    snprintf(cmd, sizeof(cmd), "git config --global user.signingkey %s", key_info->key_id);
+    if (system(cmd) != 0) {
+        log_error("Failed to configure signing key");
+        return false;
+    }
 
-int reset_configuration(void) {
-    system("git config --global --unset commit.gpgsign");
-    system("git config --global --unset user.signingkey");
-    system("git config --global --unset gpg.program");
-    return SUCCESS;
+    // Enable commit signing
+    if (system("git config --global commit.gpgsign true") != 0) {
+        log_error("Failed to enable commit signing");
+        return false;
+    }
+
+    return true;
 }
