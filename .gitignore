@@ -1,0 +1,47 @@
+# Build outputs
+*.o
+*.out
+*.exe
+gitkeykit
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Dependencies
+/vendor/
+/lib/
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.log
+*.tmp
+*~
+
+# GPG related
+*.gpg
+*.asc
+secring.*
+pubring.*
+
+# Project specific
+/build/
+/dist/
+/bin/
