@@ -10,6 +10,7 @@ typedef struct {
     char key_id[MAX_KEY_ID_LENGTH];
     char email[256];
     char name[256];
+    char passphrase[256];
 } GPGKeyInfo;
 
 bool check_gpg_installation(void);

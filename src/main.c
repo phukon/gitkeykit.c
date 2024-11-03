@@ -34,6 +34,15 @@ int main(int argc, char *argv[]) {
         fgets(key_info.email, sizeof(key_info.email), stdin);
         key_info.email[strcspn(key_info.email, "\n")] = 0;
 
+        printf("Enter passphrase (or press enter for none): ");
+        fgets(key_info.passphrase, sizeof(key_info.passphrase), stdin);
+        key_info.passphrase[strcspn(key_info.passphrase, "\n")] = 0;
+        
+        // If no passphrase was entered, use empty string
+        if (strlen(key_info.passphrase) == 0) {
+            strcpy(key_info.passphrase, "\"\"");
+        }
+
         if (!create_gpg_key(&key_info)) {
             return 1;
         }

@@ -66,11 +66,11 @@ bool create_gpg_key(GPGKeyInfo *key_info) {
         "Name-Real: %s\n"
         "Name-Email: %s\n"
         "Expire-Date: 0\n"
-        "%s\n"
+        "Passphrase: %s\n"
         "%%commit\n",
         key_info->name,
         key_info->email,
-        "%%no-protection");
+        key_info->passphrase);
 
     fclose(batch_file);
 
@@ -83,14 +83,40 @@ bool create_gpg_key(GPGKeyInfo *key_info) {
         return false;
     }
 
-    // Get the generated key ID
-    FILE *fp = popen("gpg --list-secret-keys --with-colons | grep sec | cut -d: -f5", "r");
+    FILE *fp;
+    
+    // Platform-specific command to get the key ID
+    #ifdef _WIN32
+        fp = popen("gpg --list-secret-keys --with-colons | findstr /b \"sec\"", "r");
+    #else
+        fp = popen("gpg --list-secret-keys --with-colons | grep sec | cut -d: -f5", "r");
+    #endif
+
     if (fp == NULL) {
         log_error("Failed to get key ID");
         return false;
     }
 
-    fgets(key_info->key_id, MAX_KEY_ID_LENGTH, fp);
+    // Read and parse the key ID
+    char buffer[1024];
+    if (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        #ifdef _WIN32
+            // Parse the Windows output manually
+            char *token = strtok(buffer, ":");
+            for (int i = 0; i < 4 && token != NULL; i++) {
+                token = strtok(NULL, ":");
+            }
+            if (token != NULL) {
+                strncpy(key_info->key_id, token, MAX_KEY_ID_LENGTH - 1);
+                key_info->key_id[MAX_KEY_ID_LENGTH - 1] = '\0';
+            }
+        #else
+            // Unix output is already in the correct format
+            strncpy(key_info->key_id, buffer, MAX_KEY_ID_LENGTH - 1);
+            key_info->key_id[MAX_KEY_ID_LENGTH - 1] = '\0';
+        #endif
+    }
+
     pclose(fp);
 
     return true;
