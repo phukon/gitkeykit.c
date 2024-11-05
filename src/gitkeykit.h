@@ -6,11 +6,11 @@
 #include <string.h>
 
 #ifdef _WIN32
-    #include <windows.h>
-    #define PATH_SEPARATOR "\\"
+#include <windows.h>
+#define PATH_SEPARATOR "\\"
 #else
-    #include <unistd.h>
-    #define PATH_SEPARATOR "/"
+#include <unistd.h>
+#define PATH_SEPARATOR "/"
 #endif
 
 // Return codes
@@ -20,11 +20,11 @@
 #define ERR_INVALID_ARGS 3
 
 // Function declarations
-int check_gpg_installation(void);
+int check_gpg_installation(char *gpg_path, size_t path_size);
 int check_git_installation(void);
 int create_pgp_key(void);
-int import_pgp_key(const char* key_path);
-int configure_git_gpg(const char* key_id);
+int import_pgp_key(const char *key_path);
+int configure_git_gpg(const char *key_id);
 int reset_configuration(void);
 
 #endif
