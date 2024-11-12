@@ -1,3 +1,21 @@
+/*
+ * TODO:
+ * [x] check gpg in system
+ * [x] check git install
+ * [] check for secret keys
+ * [x] list secret keys
+ * [] set gitconfig with the key
+ *
+ * [] generate keys if not present
+ * [] set gitconfig with the key
+ *
+ * [] configure gpg if linux
+ * [] add config to gpg config
+ * [] write the pin entry thing
+ * [] kill the gpg agent
+ * [] start the gpg agent
+ */
+
 #include "gitkeykit.h"
 #include <stdio.h>
 
@@ -13,27 +31,9 @@ void print_usage(void) {
 }
 
 int main(int argc, char *argv[]) {
-  // Check for GPG installation first
-  char gpg_path[128];
 
-  if (check_gpg_installation(gpg_path, sizeof(gpg_path)) != SUCCESS) {
-    fprintf(stderr, "Error: GPG is not installed or not found in PATH\n");
-    fprintf(stderr, "Please install GPG before using this tool\n");
-    return ERR_GPG_NOT_FOUND;
-  }
-
-  printf("GPG program found at %s\n", gpg_path);
-
-  if (check_git_installation() != SUCCESS) {
-    fprintf(stderr, "Error: Git is not installed or not found in PATH\n");
-    return ERR_GIT_NOT_FOUND;
-  }
-
-  printf("Git is installed.\n");
-
-  if (argc < 2) {
-    print_usage();
-    return ERR_INVALID_ARGS;
+  if (argc == 1) {
+    // return check_required_dependencies();
   }
 
   if (strcmp(argv[1], "--reset") == 0) {
@@ -50,4 +50,5 @@ int main(int argc, char *argv[]) {
 
   print_usage();
   return ERR_INVALID_ARGS;
+
 }
