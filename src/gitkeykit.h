@@ -20,6 +20,7 @@
 #define ERR_INVALID_ARGS 3
 #define ERR_NO_SECRET_KEYS 4
 #define ERR_INVALID_INPUT 5
+#define ERR_GIT_CONFIG 6
 
 // Function declarations
 int check_gpg_installation(char *gpg_path, size_t path_size);
