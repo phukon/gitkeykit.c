@@ -4,7 +4,7 @@
  * [x] check git install
  * [] check for secret keys
  * [x] list secret keys
- * [] set gitconfig with the key
+ * [x] set gitconfig with the key
  *
  * [] generate keys if not present
  * [] set gitconfig with the key

@@ -1,19 +1,38 @@
-#ifndef GITKEYKIT_H
-#define GITKEYKIT_H
+#ifndef GITKEYKIT_C
+#define GITKEYKIT_C
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+// Standard C Library headers
+#include <stdio.h>      // Standard I/O operations
+#include <stdlib.h>     // Standard library functions
+#include <string.h>     // String manipulation functions
+#include <errno.h>      // Error number definitions
+#include <sys/stat.h>   // File status and information
+#include <sys/types.h>  // Basic derived types
+#include <fcntl.h>      // File control options
+#include <ctype.h>      // Character type functions
+#include <time.h>       // Time/date utilities
 
+// ++++ ++++ ++++ ++++ ++++ ++++ ++++
 #ifdef _WIN32
-#include <windows.h>
-#define PATH_SEPARATOR "\\"
+    #include <windows.h>
+    #include <direct.h>
+    #define PATH_SEPARATOR "\\"
+    #define GPG_CHECK_CMD "where gpg"
+    #define GIT_CHECK_CMD "where git"
+    #define _popen _popen
+    #define _pclose _pclose
 #else
-#include <unistd.h>
-#define PATH_SEPARATOR "/"
+    #include <unistd.h>
+    #include <sys/wait.h>
+    #include <dirent.h>
+    #define PATH_SEPARATOR "/"
+    #define GPG_CHECK_CMD "which gpg"
+    #define GIT_CHECK_CMD "which git"
+    #define _popen popen
+    #define _pclose pclose
 #endif
 
-// Return codes
+// ++++ ++++ ++++ ++++ ++++ ++++ ++++
 #define SUCCESS 0
 #define ERR_GPG_NOT_FOUND 1
 #define ERR_GIT_NOT_FOUND 2
@@ -21,8 +40,9 @@
 #define ERR_NO_SECRET_KEYS 4
 #define ERR_INVALID_INPUT 5
 #define ERR_GIT_CONFIG 6
+#define ERR_KEY_GENERATION 7
 
-// Function declarations
+// ++++ ++++ ++++ ++++ ++++ ++++ ++++
 int check_gpg_installation(char *gpg_path, size_t path_size);
 int check_git_installation(void);
 int create_pgp_key(void);
@@ -31,5 +51,7 @@ int configure_git_gpg(const char *key_id);
 int reset_configuration(void);
 int check_required_dependencies(char *gpg_path, size_t path_size);
 int check_secret_keys(char *gpg_path);
+int set_git_config(char *gpg_path);
+int add_extra_config(void);
 
 #endif

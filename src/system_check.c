@@ -1,13 +1,5 @@
 #include "gitkeykit.h"
 
-#ifdef _WIN32
-#define GPG_CHECK_CMD "where gpg"
-#define GIT_CHECK_CMD "where git"
-#else
-#define GPG_CHECK_CMD "which gpg"
-#define GIT_CHECK_CMD "which git"
-#endif
-
 int check_gpg_installation(char *gpg_path, size_t path_size) {
   FILE *fp;
   char result[128];

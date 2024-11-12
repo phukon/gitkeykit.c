@@ -38,8 +38,11 @@ gitkeykit --reset
 ```
 
 ## Error Codes 🚨
-
 - `0`: Success
 - `1`: GPG not found
 - `2`: Git not found
 - `3`: Invalid arguments
+- `4`: No secret keys found
+- `5`: Invalid input
+- `6`: Git configuration error
+- `7`: Key generation error
