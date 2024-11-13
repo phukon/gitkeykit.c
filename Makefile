@@ -14,8 +14,30 @@ SRCS =  $(wildcard $(SRC_DIR)/*.c) \
 # Object files
 OBJS = $(SRCS:%.c=$(BUILD_DIR)/%.o)
 
-# Target executable
-TARGET = $(BIN_DIR)/gitkeykit
+# variables for architecture and OS detection
+ifeq ($(OS),Windows_NT)
+    DETECTED_OS := windows
+    ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+        DETECTED_ARCH := x86_64
+    else ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+        DETECTED_ARCH := x86
+    else
+        DETECTED_ARCH := $(PROCESSOR_ARCHITECTURE)
+    endif
+else
+    DETECTED_OS := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+    DETECTED_ARCH := $(shell uname -m)
+    # Normalize architecture names
+    ifeq ($(DETECTED_ARCH),x86_64)
+        DETECTED_ARCH := amd64
+    endif
+    ifeq ($(DETECTED_ARCH),aarch64)
+        DETECTED_ARCH := arm64
+    endif
+endif
+
+# Modify the target executable name to include OS and architecture
+TARGET = $(BIN_DIR)/gitkeykit-$(DETECTED_OS)-$(DETECTED_ARCH)
 
 # Platform-specific settings
 ifeq ($(OS),Windows_NT)
@@ -41,7 +63,6 @@ directories:
 	$(MKDIR) $(BUILD_DIR)/$(SRC_DIR)/utils
 endif
 
-# Add this near the top, after the variables but before the platform-specific settings
 all: directories $(TARGET)
 
 # Link the final executable
