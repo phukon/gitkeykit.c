@@ -22,27 +22,64 @@ Before using GitKeyKit, ensure you have:
   - macOS: `brew install gnupg`
   - Linux: `sudo apt-get install gnupg` (Ubuntu/Debian) or equivalent
 
+
 ## Installation 🚀
 
-### From Source
+### Unix-like systems
 ```bash
-git clone https://github.com/yourusername/gitkeykit.git
 cd gitkeykit
-make
-bash
-gitkeykit create
-bash
-gitkeykit import path/to/key.asc
-bash
+sudo make install
+```
+
+## Usage 📖
+
+### Setup GPG key for signing commits
+```bash
+gitkeykit
+```
+
+### Import PGP key from file
+```bash
+gitkeykit import <key_path>
+```
+
+### Reset Git and GPG configurations
+```bash
 gitkeykit --reset
 ```
 
+## Building from Source 🛠️
+
+### Compilation
+```bash
+make
+```
+
+This will:
+- Compile the source files from `src/`, `src/commands/`, and `src/utils/` directories
+- Link object files and create the executable in `bin/` directory
+- Create necessary directories (`build/` and `bin/`) if they don't exist
+- Generate the executable `gitkeykit` (or `gitkeykit.exe` on Windows)
+
+### Cleaning Up
+```bash
+make clean
+```
+This removes the `build/` and `bin/` directories along with all generated files.
+
 ## Error Codes 🚨
-- `0`: Success
-- `1`: GPG not found
-- `2`: Git not found
-- `3`: Invalid arguments
-- `4`: No secret keys found
-- `5`: Invalid input
-- `6`: Git configuration error
-- `7`: Key generation error
+
+| Code | Description |
+|------|-------------|
+| 0 | Success |
+| 1 | GPG not found |
+| 2 | Git not found |
+| 3 | Invalid arguments |
+| 4 | No secret keys found |
+| 5 | Invalid input |
+| 6 | Git configuration error |
+| 7 | Key generation error |
+| 8 | Key import error |
+| 9 | Git configuration reset error |
+| 10 | GPG configuration reset error |
+| 11 | Home directory not found |
