@@ -10,7 +10,12 @@ int check_gpg_installation(char *gpg_path, size_t path_size) {
   }
 
   if (fgets(result, sizeof(result), fp) != NULL) {
-    strncpy_s(gpg_path, path_size, result, _TRUNCATE);
+    #ifdef _WIN32
+      strncpy_s(gpg_path, path_size, result, _TRUNCATE);
+    #else
+      strncpy(gpg_path, result, path_size - 1);
+      gpg_path[path_size - 1] = '\0';
+    #endif
     _pclose(fp);
     return SUCCESS;
   }
