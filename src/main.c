@@ -1,24 +1,3 @@
-/*
- * TODO:
- * [x] check gpg in system
- * [x] check git install
- * [] check for secret keys
- * [x] list secret keys
- * [x] set gitconfig with the key
- *
- * [x] generate keys if not present
- * [x] set gitconfig with the key
- *
- * [x] configure gpg if linux
- * [x] add config to gpg config
- * [x] write the loopback pinentry thing
- * [x] kill the gpg agent
- * [x] start the gpg agent
- * [x] 'start' command
- * [] 'reset' command
- * [x] 'import' command
- */
-
 #include "gitkeykit.h"
 
 void print_usage(void) {
@@ -40,12 +19,10 @@ int main(int argc, char *argv[]) {
 
   if (strcmp(argv[1], "--reset") == 0) {
     return reset();
-  }
-  else if (strcmp(argv[1], "--help") == 0) {
+  } else if (strcmp(argv[1], "--help") == 0) {
     print_usage();
     return 0;
-  }
-  else if (strcmp(argv[1], "import") == 0) {
+  } else if (strcmp(argv[1], "import") == 0) {
     if (argc != 3) {
       fprintf(stderr, "Error: Import command requires a key path\n");
       return ERR_INVALID_ARGS;

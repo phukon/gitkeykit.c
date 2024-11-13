@@ -1,4 +1,56 @@
-# GitKeyKit (C Port) 🔐
+<!--
+<div
+  style={{
+    display: 'flex',
+    height: '100%',
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    backgroundColor: '#282828', // Gruvbox dark background
+    color: '#ebdbb2', // Gruvbox light text color
+    fontSize: 60,
+    letterSpacing: -2,
+    fontWeight: 700,
+    textAlign: 'center',
+    border: '6px solid #fabd2f', // Yellow border color
+    borderRadius: '15px', // Rounded corners for a softer look
+    boxShadow: '0 0 15px #fabd2f', // Soft yellow glow
+    padding: '20px', // Space inside border for better appearance
+  }}
+>
+  <div
+  >
+    🔑
+  </div>
+  <div
+    style={{
+      color: '#fabd2f', // Gruvbox yellow for title text
+      fontSize: 50,
+      fontWeight: 'bold',
+    }}
+  >
+    GitKeyKit.c
+  </div>
+</div>
+
+-->
+
+<img alt="GitKeyKit is a lightweight command-line tool that simplifies PGP key management for Git commit signing. It automates the process of creating, importing, and configuring GPG keys for Git commit verification." src="https://github.com/user-attachments/assets/0cd7c951-002d-4eb6-9a7b-8acaf6a6dc55">
+
+
+<h3 align="center">GitKeyKit.c</h3>
+
+<p align="center">
+    A C implementation of <a href="https://github.com/phukon/gitkeykit">GitKeyKit</a>, originally created in TypeScript.
+</p>
+
+<p align="center">
+  <a href="https://github.com/phukon/gitkeykit.c/blob/main/LICENSE">
+    <img alt="GitHub License" src="https://img.shields.io/github/license/phukon/gitkeykit.c">
+  </a>
+</p>
+<br/>
 
 A C implementation of [GitKeyKit](https://github.com/phukon/gitkeykit), originally created in TypeScript. This port brings the same simplified PGP key management for Git commit signing to C, making it more portable and dependency-free.
 
