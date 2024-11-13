@@ -1,6 +1,6 @@
 #include "../gitkeykit.h"
 
-int check_secret_keys(char *gpg_path) {
+int check_secret_keys(void) {
   char command[256];
   FILE *fp;
 

@@ -3,7 +3,11 @@
 static int create_directory(const char *path) {
     struct stat st = {0};
     if (stat(path, &st) == -1) {
-        return mkdir(path, 0700);
+        #ifdef _WIN32
+            return mkdir(path);
+        #else
+            return mkdir(path, 0700);
+        #endif
     }
     return 0;
 }
@@ -19,8 +23,8 @@ static int append_to_file(const char *filepath, const char *content) {
 }
 
 int add_extra_config(void) {
-    char gpg_conf_path[512];
-    char gnupg_dir[512];
+    char gpg_conf_path[1024];
+    char gnupg_dir[1024];
     char *home_dir;
 
     home_dir = getenv("HOME");
@@ -29,15 +33,21 @@ int add_extra_config(void) {
         return ERR_INVALID_INPUT;
     }
 
-    snprintf(gnupg_dir, sizeof(gnupg_dir), "%s/.gnupg", home_dir);
-    snprintf(gpg_conf_path, sizeof(gpg_conf_path), "%s/gpg.conf", gnupg_dir);
+    if (snprintf(gnupg_dir, sizeof(gnupg_dir), "%s/.gnupg", home_dir) >= (int)sizeof(gnupg_dir)) {
+        fprintf(stderr, "Error: gnupg_dir buffer overflow\n");
+        return ERR_BUFFER_OVERFLOW;
+    }
+
+    if (snprintf(gpg_conf_path, sizeof(gpg_conf_path), "%s/gpg.conf", gnupg_dir) >= (int)sizeof(gpg_conf_path)) {
+        fprintf(stderr, "Error: gpg_conf_path buffer overflow\n");
+        return ERR_BUFFER_OVERFLOW;
+    }
 
     if (create_directory(gnupg_dir) != 0) {
         fprintf(stderr, "Error: Could not create .gnupg directory\n");
         return ERR_INVALID_INPUT;
     }
 
-    // Clear or create gpg.conf
     FILE *file = fopen(gpg_conf_path, "w");
     if (!file) {
         fprintf(stderr, "Error: Could not open gpg.conf\n");
@@ -51,14 +61,12 @@ int add_extra_config(void) {
         return ERR_INVALID_INPUT;
     }
 
-    // Kill gpg-agent
     if (system("gpgconf --kill gpg-agent") != 0) {
         fprintf(stderr, "Warning: Could not kill gpg-agent\n");
     } else {
         printf("gpg-agent killed.\n");
     }
 
-    // Start gpg-agent
     if (system("gpg-agent --daemon") != 0) {
         fprintf(stderr, "Warning: Could not start gpg-agent\n");
     } else {

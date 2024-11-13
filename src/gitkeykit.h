@@ -48,6 +48,7 @@
 #define ERR_GIT_CONFIG_RESET 9
 #define ERR_GPG_CONFIG_RESET 10
 #define ERR_HOME_DIRECTORY_NOT_FOUND 11
+#define ERR_BUFFER_OVERFLOW 12
 
 // ++++ ++++ ++++ ++++ ++++ ++++ ++++
 
@@ -59,7 +60,7 @@ int clear_gpg_config(void);
 int import_key(char * key_path);
 int check_git_installation(void);
 int set_git_config(char *gpg_path);
-int check_secret_keys(char *gpg_path);
+int check_secret_keys(void);
 int check_gpg_installation(char *gpg_path, size_t path_size);
 int check_required_dependencies(char *gpg_path, size_t path_size);
 

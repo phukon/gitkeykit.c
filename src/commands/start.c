@@ -4,7 +4,7 @@
 int start(void) {
   char gpg_path[128];
   check_required_dependencies(gpg_path, sizeof(gpg_path));
-  if (check_secret_keys(gpg_path) != SUCCESS) {
+  if (check_secret_keys() != SUCCESS) {
     create_pgp_key();
   }
 
