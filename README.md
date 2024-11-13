@@ -52,7 +52,7 @@ gitkeykit --reset
 
 ### Compilation
 ```bash
-make
+make all
 ```
 
 This will:

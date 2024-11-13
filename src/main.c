@@ -41,6 +41,10 @@ int main(int argc, char *argv[]) {
   if (strcmp(argv[1], "--reset") == 0) {
     return reset();
   }
+  else if (strcmp(argv[1], "--help") == 0) {
+    print_usage();
+    return 0;
+  }
   else if (strcmp(argv[1], "import") == 0) {
     if (argc != 3) {
       fprintf(stderr, "Error: Import command requires a key path\n");
