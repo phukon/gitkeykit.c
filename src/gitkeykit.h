@@ -43,6 +43,9 @@
 #define ERR_GIT_CONFIG 6
 #define ERR_KEY_GENERATION 7
 #define ERR_KEY_IMPORT 8
+#define ERR_GIT_CONFIG_RESET 9
+#define ERR_GPG_CONFIG_RESET 10
+#define ERR_HOME_DIRECTORY_NOT_FOUND 11
 
 // ++++ ++++ ++++ ++++ ++++ ++++ ++++
 int check_gpg_installation(char *gpg_path, size_t path_size);
