@@ -35,11 +35,11 @@ void print_usage(void) {
 int main(int argc, char *argv[]) {
 
   if (argc == 1) {
-    // return check_required_dependencies();
+    return start();
   }
 
   if (strcmp(argv[1], "--reset") == 0) {
-    return reset_configuration();
+    return reset();
   }
   else if (strcmp(argv[1], "import") == 0) {
     if (argc != 3) {

@@ -13,6 +13,7 @@
 #include <time.h>       // Time/date utilities
 
 // ++++ ++++ ++++ ++++ ++++ ++++ ++++
+
 #ifdef _WIN32
     #include <windows.h>
     #include <direct.h>
@@ -34,6 +35,7 @@
 #endif
 
 // ++++ ++++ ++++ ++++ ++++ ++++ ++++
+
 #define SUCCESS 0
 #define ERR_GPG_NOT_FOUND 1
 #define ERR_GIT_NOT_FOUND 2
@@ -48,16 +50,19 @@
 #define ERR_HOME_DIRECTORY_NOT_FOUND 11
 
 // ++++ ++++ ++++ ++++ ++++ ++++ ++++
-int check_gpg_installation(char *gpg_path, size_t path_size);
-int check_git_installation(void);
+
+int reset(void);
+int start(void);
 int create_pgp_key(void);
-int import_key(char * key_path);
-// int import_pgp_key(const char *key_path);
-int configure_git_gpg(const char *key_id);
-int reset_configuration(void);
-int check_required_dependencies(char *gpg_path, size_t path_size);
-int check_secret_keys(char *gpg_path);
-int set_git_config(char *gpg_path);
 int add_extra_config(void);
+int clear_gpg_config(void);
+int import_key(char * key_path);
+int check_git_installation(void);
+int set_git_config(char *gpg_path);
+int check_secret_keys(char *gpg_path);
+int check_gpg_installation(char *gpg_path, size_t path_size);
+int check_required_dependencies(char *gpg_path, size_t path_size);
+
+// ++++ ++++ ++++ ++++ ++++ ++++ ++++
 
 #endif
