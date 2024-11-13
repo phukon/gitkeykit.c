@@ -15,6 +15,15 @@ int create_pgp_key(void) {
     return ERR_INVALID_INPUT;
   }
 
+  response[strcspn(response, "\n")] = 0;
+
+  if (strlen(response) != 1 || 
+      (response[0] != 'y' && response[0] != 'Y' && 
+      response[0] != 'n' && response[0] != 'N')) {
+    printf("Invalid input. Please enter 'y' or 'n'.\n");
+    return ERR_INVALID_INPUT;
+  }
+
   if (response[0] == 'n' || response[0] == 'N') {
     printf("Aborting key creation.\n");
     return SUCCESS;
